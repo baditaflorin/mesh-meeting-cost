@@ -1,10 +1,12 @@
-# mesh-meeting-cost
+# Meeting Cost
 
-[![pages](https://img.shields.io/badge/live-baditaflorin.github.io%2Fmesh-meeting-cost-06b6d4)](https://baditaflorin.github.io/mesh-meeting-cost/)
+[![pages](https://img.shields.io/badge/live-baditaflorin.github.io%2Fmesh-meeting-cost-9dbdff)](https://baditaflorin.github.io/mesh-meeting-cost/)
 [![version](https://img.shields.io/badge/version-0.1.0-blue)](https://github.com/baditaflorin/mesh-meeting-cost/blob/main/package.json)
 [![license](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
 
-> Live meeting cost meter — punch in your rate, see what the meeting is costing in real time
+> A peer-to-peer meeting ledger that shows one live, shared cost total.
+
+![Meeting Cost live shared ledger](docs/meeting-cost-preview.png)
 
 Live: **https://baditaflorin.github.io/mesh-meeting-cost/**
 
@@ -16,7 +18,17 @@ Tip the dev: **https://www.paypal.com/paypalme/florinbadita**
 
 ## What it is
 
-Peer-to-peer browser app, no backend of its own beyond the self-hosted WebRTC stack listed below. Built on `@baditaflorin/mesh-common`, hosted on GitHub Pages from `docs/`.
+Meeting Cost is a focused browser utility for teams that want to make meeting spend visible while the meeting is happening. Each person adds an hourly cost, then anyone in the room can start, pause, or reset the shared timer. The room shows one synchronized total and team burn rate.
+
+It is peer-to-peer: no application backend stores a meeting ledger. Built on `@baditaflorin/mesh-common`, it is hosted on GitHub Pages from `docs/`.
+
+## How a room works
+
+1. Choose a local display name and hourly cost.
+2. Add the rate to the room total; the number synchronizes directly to other peers.
+3. Start the shared timer. Everyone sees the same elapsed time, team burn rate, and growing meeting cost.
+
+Display names stay local to the browser. The numeric rate is shared so every peer can calculate the common total; see [Privacy](#privacy) for the complete boundary.
 
 ## Quickstart (local)
 
@@ -56,6 +68,8 @@ GitHub Pages serves the committed `docs/` directory on the `main` branch. There 
 ```bash
 npm run smoke   # build + sanity-check docs/
 ```
+
+To refresh the documentation preview after a build, serve `docs/` locally and run `npm run preview:capture` from a second terminal.
 
 ## Privacy
 

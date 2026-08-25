@@ -34,13 +34,15 @@ test("two peers in the same room can both load", async ({ browser, baseURL }) =>
     // accessibility tree. Close it on each peer before asserting the shared
     // app surface, without changing the app's onboarding behavior.
     await Promise.all([closeInitiallyOpenSettings(a), closeInitiallyOpenSettings(b)]);
-    await expect(a.locator(".mesh-self-ref, .self-ref").first()).toBeVisible();
-    await expect(b.locator(".mesh-self-ref, .self-ref").first()).toBeVisible();
-    // Both should reach a non-loading state within the timeout — most apps
-    // either show a count, a heading, or a primary control. We assert that
-    // at least one <h1> is present on both pages.
+    // The modern inset shell owns a compact app bar rather than the legacy
+    // self-reference footer. Both peers must still reach the real product
+    // surface and expose its live meeting control.
+    await expect(a.locator("[data-mesh-app-shell]").first()).toBeVisible();
+    await expect(b.locator("[data-mesh-app-shell]").first()).toBeVisible();
     await expect(a.getByRole("heading", { level: 1 }).first()).toBeVisible();
     await expect(b.getByRole("heading", { level: 1 }).first()).toBeVisible();
+    await expect(a.getByTestId("primary-action")).toBeVisible();
+    await expect(b.getByTestId("primary-action")).toBeVisible();
   } finally {
     await cleanup();
   }

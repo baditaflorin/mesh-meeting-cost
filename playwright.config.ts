@@ -12,6 +12,9 @@ export default defineConfig({
   testDir: "./tests/e2e",
   timeout: 30_000,
   expect: { timeout: 5_000 },
+  // Mesh rooms share browser-local transport during two-peer tests. Keep the
+  // complete suite serial so test rooms and the preview server stay isolated.
+  workers: 1,
   fullyParallel: false,
   reporter: process.env["CI"] ? "list" : [["list"], ["json", { outputFile: "test-results.json" }]],
   use: {

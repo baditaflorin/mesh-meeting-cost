@@ -1,0 +1,5 @@
+# Vite's vendored output intentionally embeds indentation inside template
+# literals. Preserve that generated content without treating it as source
+# trailing whitespace during release checks.
+docs/assets/*.js -whitespace
+docs/assets/*.js.map -whitespace

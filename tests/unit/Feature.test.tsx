@@ -5,20 +5,22 @@ import { Feature } from "../../src/Feature";
 import { config } from "../../src/config";
 
 describe("Feature (component)", () => {
-  it("renders the app name when connected", () => {
+  it("renders a live cost surface with an honest pre-rate action", () => {
     const room = createMockRoom();
     render(<Feature room={room} config={config} />);
-    // Most apps show their human label in an <h1>. Allow either the config
-    // appName or any first-level heading to be present.
-    const heading = screen.getAllByRole("heading", { level: 1 })[0];
-    expect(heading).toBeInTheDocument();
+    expect(screen.getByTestId("meeting-cost-surface")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 1, name: "Meeting cost" })).toBeInTheDocument();
+    expect(screen.getByText("Current meeting cost")).toBeInTheDocument();
+    expect(screen.getByText("$0.00")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Start meeting" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Add to team total" })).toBeDisabled();
   });
 
   it("shows a connecting state when room is null", () => {
     render(<Feature room={null} config={config} />);
-    // Most templates show "Connecting…" while the room is null. Apps with a
-    // custom waiting state can override this test.
-    const heading = screen.getAllByRole("heading", { level: 1 })[0];
-    expect(heading).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 1, name: "Opening the cost meter" }),
+    ).toBeInTheDocument();
+    expect(screen.getByText("Connecting to the shared ledger")).toBeInTheDocument();
   });
 });
